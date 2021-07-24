@@ -1,4 +1,4 @@
-# Talo Self-hosted
+# Talo self-hosted
 
 ## Quickstart
 * Clone the repo

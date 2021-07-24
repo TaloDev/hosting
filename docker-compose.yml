@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   backend:
-    image: tudorrr/backend:latest
+    image: ghcr.io/talodev/backend:latest
     ports:
       - ${PROXY_PORT}:9000
     volumes:
