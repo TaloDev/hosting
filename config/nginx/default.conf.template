@@ -17,7 +17,7 @@ server {
         proxy_set_header    Host                $host;
         proxy_set_header    X-Forwarded-Host    $host;
         proxy_set_header    X-Forwarded-Port    $server_port;
-        proxy_pass http://backend:${PROXY_PORT};
+        proxy_pass http://backend;
     }
 
     #error_page  404              /404.html;
