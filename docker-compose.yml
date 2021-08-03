@@ -4,7 +4,7 @@ services:
   backend:
     image: ghcr.io/talodev/backend:latest
     volumes:
-      - ./.env:/usr/backend/.env
+      - .env:/usr/backend/.env
     depends_on:
       - db
       - redis
@@ -33,7 +33,6 @@ services:
     restart: unless-stopped
     environment:
       - CERTBOT_EMAIL=${CA_EMAIL}
-      - PROXY_PORT=${PROXY_PORT}
       - DOMAIN_NAME=${CA_DOMAIN}
     ports:
       - 80:80
