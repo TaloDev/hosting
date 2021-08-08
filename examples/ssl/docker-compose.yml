@@ -1,8 +1,9 @@
-version: '3.9'
+version: '3.8'
 
 services:
   backend:
     image: ghcr.io/talodev/backend:latest
+    restart: on-failure
     volumes:
       - .env:/usr/backend/.env
     depends_on:
