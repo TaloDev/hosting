@@ -1,6 +1,11 @@
 version: '3.8'
 
 services:
+  frontend:
+    image: ghcr.io/talodev/frontend:latest
+    environment:
+      - API_URL=https://${BACKEND_DOMAIN}
+
   backend:
     image: ghcr.io/talodev/backend:latest
     restart: on-failure
@@ -34,7 +39,8 @@ services:
     restart: unless-stopped
     environment:
       - CERTBOT_EMAIL=${CA_EMAIL}
-      - DOMAIN_NAME=${CA_DOMAIN}
+      - FRONTEND_DOMAIN=${FRONTEND_DOMAIN}
+      - BACKEND_DOMAIN=${BACKEND_DOMAIN}
     ports:
       - 80:80
       - 443:443
@@ -42,6 +48,7 @@ services:
       - certs:/etc/letsencrypt
       - ./config/nginx:/etc/nginx/templates
     depends_on:
+      - frontend
       - backend
 
 volumes:

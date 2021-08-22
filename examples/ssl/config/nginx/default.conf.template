@@ -1,14 +1,12 @@
 server {
-    listen              443 ssl default_server;
-    server_name         ${DOMAIN_NAME};
+    listen              443 ssl;
+    listen              [::]:443 ssl;
+    server_name         ${FRONTEND_DOMAIN};
 
-    ssl_certificate /etc/letsencrypt/live/${DOMAIN_NAME}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/${DOMAIN_NAME}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/${DOMAIN_NAME}/chain.pem;
+    ssl_certificate /etc/letsencrypt/live/talo/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/talo/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/talo/chain.pem;
     ssl_dhparam /etc/letsencrypt/dhparams/dhparam.pem;
-
-    #charset koi8-r;
-    #access_log  /var/log/nginx/host.access.log  main;
 
     location / {
         proxy_set_header    X-Real-IP           $remote_addr;
@@ -17,22 +15,27 @@ server {
         proxy_set_header    Host                $host;
         proxy_set_header    X-Forwarded-Host    $host;
         proxy_set_header    X-Forwarded-Port    $server_port;
-        proxy_pass http://backend;
+        proxy_pass          http://frontend;
     }
+}
 
-    #error_page  404              /404.html;
+server {
+    listen              443 ssl;
+    listen              [::]:443 ssl;
+    server_name         ${BACKEND_DOMAIN};
 
-    # redirect server error pages to the static page /50x.html
-    #
-    # error_page   500 502 503 504  /50x.html;
-    # location = /50x.html {
-    #     root   /usr/share/nginx/html;
-    # }
+    ssl_certificate /etc/letsencrypt/live/talo/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/talo/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/talo/chain.pem;
+    ssl_dhparam /etc/letsencrypt/dhparams/dhparam.pem;
 
-    # deny access to .htaccess files, if Apache's document root
-    # concurs with nginx's one
-    #
-    #location ~ /\.ht {
-    #    deny  all;
-    #}
+    location / {
+        proxy_set_header    X-Real-IP           $remote_addr;
+        proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto   $scheme;
+        proxy_set_header    Host                $host;
+        proxy_set_header    X-Forwarded-Host    $host;
+        proxy_set_header    X-Forwarded-Port    $server_port;
+        proxy_pass          http://backend;
+    }
 }

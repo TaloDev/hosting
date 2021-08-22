@@ -1,11 +1,20 @@
 version: '3.8'
 
 services:
+  frontend:
+    image: ghcr.io/talodev/frontend:latest
+    environment:
+      - API_URL=http://localhost:${BACKEND_PORT}
+    ports:
+      - 80:80
+
   backend:
     image: ghcr.io/talodev/backend:latest
     restart: on-failure
     volumes:
       - .env:/usr/backend/.env
+    ports:
+      - ${BACKEND_PORT}:80
     depends_on:
       - db
       - redis
@@ -28,16 +37,6 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:
       - 6379:6379
-
-  web:
-    image: nginx:latest
-    restart: unless-stopped
-    volumes:
-      - ./config/nginx:/etc/nginx/templates
-    ports:
-      - ${PROXY_PORT}:80
-    depends_on:
-      - backend
 
 volumes:
   data:
