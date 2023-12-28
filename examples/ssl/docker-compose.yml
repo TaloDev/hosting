@@ -31,7 +31,7 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
   web:
-    image: jonasal/nginx-certbot:2.4.0-alpine
+    image: jonasal/nginx-certbot:5.0.0-alpine
     restart: unless-stopped
     environment:
       - CERTBOT_EMAIL=${CA_EMAIL}
