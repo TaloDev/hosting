@@ -21,7 +21,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
     restart: always
     volumes:
-      - data:/var/lib/mysql
+      - db_data:/var/lib/mysql
     
   redis:
     image: bitnami/redis:7.2
@@ -29,22 +29,23 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
   web:
-    image: jonasal/nginx-certbot:5.1.0-alpine
+    image: caddy:2.8-alpine
     restart: unless-stopped
     environment:
-      - CERTBOT_EMAIL=${CA_EMAIL}
       - FRONTEND_DOMAIN=${FRONTEND_DOMAIN}
       - BACKEND_DOMAIN=${BACKEND_DOMAIN}
     ports:
       - 80:80
       - 443:443
     volumes:
-      - certs:/etc/letsencrypt
-      - ./config/nginx:/etc/nginx/templates
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./config/Caddyfile:/etc/caddy/Caddyfile
     depends_on:
       - frontend
       - backend
 
 volumes:
-  data:
-  certs:
+  db_data:
+  caddy_data:
+  caddy_config:

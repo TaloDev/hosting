@@ -1,0 +1,50 @@
+services:
+  frontend:
+    image: ghcr.io/talodev/frontend:latest
+    environment:
+      - API_URL=https://${BACKEND_DOMAIN}
+
+  backend:
+    image: ghcr.io/talodev/backend:latest
+    restart: on-failure
+    volumes:
+      - .env:/usr/backend/.env
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: mysql:8.4
+    command: --mysql-native-password=ON
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+    
+  redis:
+    image: bitnami/redis:7.2
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+
+  web:
+    image: jonasal/nginx-certbot:5.4.0-alpine
+    restart: unless-stopped
+    environment:
+      - CERTBOT_EMAIL=${CA_EMAIL}
+      - FRONTEND_DOMAIN=${FRONTEND_DOMAIN}
+      - BACKEND_DOMAIN=${BACKEND_DOMAIN}
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - certs:/etc/letsencrypt
+      - ./config/nginx:/etc/nginx/templates
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  db_data:
+  certs:
