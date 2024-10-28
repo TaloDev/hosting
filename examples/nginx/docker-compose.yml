@@ -2,17 +2,13 @@ services:
   frontend:
     image: ghcr.io/talodev/frontend:latest
     environment:
-      - API_URL=http://localhost:${BACKEND_PORT}
-    ports:
-      - 80:80
+      - API_URL=https://${BACKEND_DOMAIN}
 
   backend:
     image: ghcr.io/talodev/backend:latest
     restart: on-failure
     volumes:
       - .env:/usr/backend/.env
-    ports:
-      - ${BACKEND_PORT}:80
     depends_on:
       - db
       - redis
@@ -44,6 +40,24 @@ services:
     volumes:
       - clickhouse-data:/var/lib/clickhouse
 
+  web:
+    image: jonasal/nginx-certbot:5.4-alpine
+    restart: unless-stopped
+    environment:
+      - CERTBOT_EMAIL=${CA_EMAIL}
+      - FRONTEND_DOMAIN=${FRONTEND_DOMAIN}
+      - BACKEND_DOMAIN=${BACKEND_DOMAIN}
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - certs:/etc/letsencrypt
+      - ./config/nginx:/etc/nginx/templates
+    depends_on:
+      - frontend
+      - backend
+
 volumes:
   db-data:
   clickhouse-data:
+  certs:

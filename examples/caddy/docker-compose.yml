@@ -21,30 +21,44 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
     restart: always
     volumes:
-      - data:/var/lib/mysql
+      - db-data:/var/lib/mysql
     
   redis:
     image: bitnami/redis:7.2
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
+  clickhouse:
+    image: ghcr.io/talodev/clickhouse:latest
+    environment:
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      CLICKHOUSE_DB: ${CLICKHOUSE_DB}
+    restart: unless-stopped
+    ports:
+      - ${CLICKHOUSE_PORT}:8123
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+
   web:
-    image: jonasal/nginx-certbot:5.1.0-alpine
+    image: caddy:2.8-alpine
     restart: unless-stopped
     environment:
-      - CERTBOT_EMAIL=${CA_EMAIL}
       - FRONTEND_DOMAIN=${FRONTEND_DOMAIN}
       - BACKEND_DOMAIN=${BACKEND_DOMAIN}
     ports:
       - 80:80
       - 443:443
     volumes:
-      - certs:/etc/letsencrypt
-      - ./config/nginx:/etc/nginx/templates
+      - caddy-data:/data
+      - caddy-config:/config
+      - ./config/Caddyfile:/etc/caddy/Caddyfile
     depends_on:
       - frontend
       - backend
 
 volumes:
-  data:
-  certs:
+  db-data:
+  clickhouse-data:
+  caddy-data:
+  caddy-config:
