@@ -21,7 +21,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
     restart: always
     volumes:
-      - dbdata:/var/lib/mysql
+      - db-data:/var/lib/mysql
     
   redis:
     image: bitnami/redis:7.2
