@@ -32,5 +32,17 @@ services:
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
+  clickhouse:
+    image: ghcr.io/talodev/clickhouse:latest
+    environment:
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      CLICKHOUSE_DB: ${CLICKHOUSE_DB}
+    restart: unless-stopped
+    ports:
+      - ${CLICKHOUSE_PORT}:8123
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+
 volumes:
   data:
