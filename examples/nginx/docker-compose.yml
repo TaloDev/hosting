@@ -21,7 +21,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
     restart: always
     volumes:
-      - db_data:/var/lib/mysql
+      - db-data:/var/lib/mysql
     
   redis:
     image: bitnami/redis:7.2
@@ -58,5 +58,6 @@ services:
       - backend
 
 volumes:
-  db_data:
+  db-data:
+  clickhouse-data:
   certs:

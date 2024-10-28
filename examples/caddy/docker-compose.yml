@@ -21,7 +21,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
     restart: always
     volumes:
-      - db_data:/var/lib/mysql
+      - dbdata:/var/lib/mysql
     
   redis:
     image: bitnami/redis:7.2
@@ -50,14 +50,15 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - caddy_data:/data
-      - caddy_config:/config
+      - caddy-data:/data
+      - caddy-config:/config
       - ./config/Caddyfile:/etc/caddy/Caddyfile
     depends_on:
       - frontend
       - backend
 
 volumes:
-  db_data:
-  caddy_data:
-  caddy_config:
+  db-data:
+  clickhouse-data:
+  caddy-data:
+  caddy-config:
