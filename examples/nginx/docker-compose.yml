@@ -41,7 +41,7 @@ services:
       - clickhouse-data:/var/lib/clickhouse
 
   web:
-    image: jonasal/nginx-certbot:5.4.0-alpine
+    image: jonasal/nginx-certbot:5.4-alpine
     restart: unless-stopped
     environment:
       - CERTBOT_EMAIL=${CA_EMAIL}
