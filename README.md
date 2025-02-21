@@ -32,6 +32,7 @@ See the [self-hosting docs](https://docs.trytalo.com/docs/selfhosting/overview) 
 - ⚙️ [Live config](https://trytalo.com/live-config): Update game settings from the web with zero downtime.
 - 🔧 [Steamworks integration](https://trytalo.com/steamworks-integration): Hook into Steamworks for authentication and ownership checks.
 - 🗣️ [Game feedback](https://trytalo.com/feedback): Collect and manage feedback from your players.
+- 🔔 [Player presence](https://trytalo.com/players#presence): See if players are online and set custom statuses.
 
 ## Join our community
 
