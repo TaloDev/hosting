@@ -1,8 +1,6 @@
 # Talo: self-hostable game dev tools
 
-Talo is a collection of tools and APIs designed to make game development easier and to help you make better data-driven decisions.
-
-From essentials like player management, stats and leaderboards to advanced APIs for game saves, event tracking and player authentication.
+Talo is the easiest way to add leaderboards, player authentication, socket-based multiplayer and more to your game. Using the Talo Dashboard, you can visualise and analyse your game data to make data-driven decisions.
 
 Talo is available to use via our [Godot plugin](https://github.com/TaloDev/godot), [Unity package](https://github.com/TaloDev/unity) or [REST API](https://docs.trytalo.com/docs/http/authentication).
 
@@ -18,7 +16,7 @@ Talo is designed to be easily self-hosted and we've included some examples in th
 
 See the [self-hosting docs](https://docs.trytalo.com/docs/selfhosting/overview) for a more detailed look into the examples, setting up emails and third-party services.
 
-## Talo's key features
+## Features
 
 - 👥 [Player management](https://trytalo.com/players): Persist player data across sessions, create segments and handle authentication.
 - ⚡️ [Event tracking](https://trytalo.com/events): Track in-game player actions individually and globally.
@@ -34,10 +32,11 @@ See the [self-hosting docs](https://docs.trytalo.com/docs/selfhosting/overview) 
 - 🗣️ [Game feedback](https://trytalo.com/feedback): Collect and manage feedback from your players.
 - 🔔 [Player presence](https://trytalo.com/players#presence): See if players are online and set custom statuses.
 
-## Join our community
+## Links
+
+- [Website](https://trytalo.com)
+- [Self-hosting docs](https://docs.trytalo.com/docs/selfhosting/overview)
+
+## Join the community
 
 Have questions, want to share feedback or show off your game? [Join us on Discord](https://trytalo.com/discord) to connect with other developers and get help from the Talo team.
-
----
-
-Find all the details about Talo on our [website](https://trytalo.com)!
