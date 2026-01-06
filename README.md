@@ -31,6 +31,7 @@ See the [self-hosting docs](https://docs.trytalo.com/docs/selfhosting/overview) 
 - 🔧 [Steamworks integration](https://trytalo.com/steamworks-integration): Hook into Steamworks for authentication and ownership checks.
 - 🗣️ [Game feedback](https://trytalo.com/feedback): Collect and manage feedback from your players.
 - 🔔 [Player presence](https://trytalo.com/players#presence): See if players are online and set custom statuses.
+- 🤝 [Player relationships](https://trytalo.com/player-relationships): Easily add friends, followers and social systems to your game.
 
 ## Links
 
