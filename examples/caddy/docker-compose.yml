@@ -15,10 +15,14 @@ services:
 
   db:
     image: mysql:8.4
-    command: --mysql-native-password=ON
     environment:
       - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      # A random root password is generated and printed once on first start
+      # (`docker compose logs db`). Only that account can create users, so the
+      # app deliberately connects as ${DB_USER} instead.
+      - MYSQL_RANDOM_ROOT_PASSWORD=1
     restart: always
     volumes:
       - db-data:/var/lib/mysql
@@ -36,7 +40,8 @@ services:
       CLICKHOUSE_DB: ${CLICKHOUSE_DB}
     restart: always
     ports:
-      - ${CLICKHOUSE_PORT}:8123
+      # Loopback so the port isn't exposed.
+      - 127.0.0.1:${CLICKHOUSE_PORT}:8123
     volumes:
       - clickhouse-data:/var/lib/clickhouse
 
